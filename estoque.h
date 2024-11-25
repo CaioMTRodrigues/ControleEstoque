@@ -4,5 +4,6 @@
 void cadastrarEntrada();
 void cadastrarSaida();
 void visualizarEstoque();
+void relatorioCompleto();
 
 #endif
