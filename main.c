@@ -4,64 +4,65 @@
 #include "usuarios.h"
 #include "estoque.h"
 
-void menuPrincipal() {
-    int opcao;
-    do {
-        printf("\n--- Menu Principal ---\n");
-        printf("1. Cadastrar entrada de novo item\n");
-        printf("2. Cadastrar saída de item\n");
-        printf("3. Visualizar itens no estoque\n");
-        printf("4. Sair\n");
-        printf("Escolha uma opção: ");
-        scanf("%d", &opcao);
-
-        switch (opcao) {
-            case 1:
-                cadastrarEntrada();
-                break;
-            case 2:
-                cadastrarSaida();
-                break;
-            case 3:
-                visualizarEstoque();
-                break;
-            case 4:
-                printf("Saindo...\n");
-                break;
-            default:
-                printf("Opção inválida! Tente novamente.\n");
-        }
-    } while (opcao != 4);
-}
-
 int main() {
-    int opcao;
-    do {
-        printf("\n--- Sistema de Controle de Estoque ---\n");
-        printf("1. Cadastrar novo usuário\n");
-        printf("2. Logar com usuário existente\n");
-        printf("3. Sair\n");
-        printf("Escolha uma opção: ");
-        scanf("%d", &opcao);
+    int opcao, logado = 0;
 
-        switch (opcao) {
-            case 1:
-                cadastrarUsuario();
-                break;
-            case 2:
-                if (loginUsuario()) {
-                    menuPrincipal();
-                } else {
-                    printf("Falha no login! Tente novamente.\n");
-                }
-                break;
-            case 3:
-                printf("Saindo...\n");
-                break;
-            default:
-                printf("Opção inválida! Tente novamente.\n");
+    do {
+        if (!logado) {
+            printf("\n--- Menu de Usuário ---\n");
+            printf("1. Cadastrar novo usuário\n");
+            printf("2. Fazer login\n");
+            printf("3. Sair\n");
+            printf("Escolha: ");
+            scanf("%d", &opcao);
+
+            switch (opcao) {
+                case 1:
+                    cadastrarUsuario();
+                    break;
+                case 2:
+                    logado = loginUsuario();
+                    if (!logado) {
+                        printf("Falha no login! Tente novamente.\n");
+                    }
+                    break;
+                case 3:
+                    printf("Saindo...\n");
+                    return 0;
+                default:
+                    printf("Opção inválida! Tente novamente.\n");
+            }
+        } else {
+            printf("\n--- Menu Principal ---\n");
+            printf("1. Cadastrar entrada de item\n");
+            printf("2. Cadastrar saída de item\n");
+            printf("3. Visualizar estoque simples\n");
+            printf("4. Visualizar relatório completo\n");
+            printf("5. Sair\n");
+            printf("Escolha: ");
+            scanf("%d", &opcao);
+
+            switch (opcao) {
+                case 1:
+                    cadastrarEntrada();
+                    break;
+                case 2:
+                    cadastrarSaida();
+                    break;
+                case 3:
+                    visualizarEstoque();
+                    break;
+                case 4:
+                    relatorioCompleto();
+                    break;
+                case 5:
+                    printf("Saindo...\n");
+                    return 0;
+                default:
+                    printf("Opção inválida! Tente novamente.\n");
+            }
         }
-    } while (opcao != 3);
+    } while (1);
 
     return 0;
 }
