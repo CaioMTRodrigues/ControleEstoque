@@ -5,6 +5,14 @@
 
 #define ARQUIVO_ESTOQUE "estoque.txt"
 
+void cadastrarEntrada() {
+    // Implementação aqui
+}
+
+void cadastrarSaida() {
+    // Implementação aqui
+}
+
 typedef struct {
     char nome[50];
     int quantidade;
