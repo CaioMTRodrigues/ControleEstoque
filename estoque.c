@@ -6,11 +6,49 @@
 #define ARQUIVO_ESTOQUE "estoque.txt"
 
 void cadastrarEntrada() {
-    // Implementação aqui
+     FILE *arquivo = fopen(ARQUIVO_ESTOQUE, "a"); // Abre o arquivo em modo de adição
+    if (!arquivo) {
+        printf("Erro ao abrir o arquivo de estoque!\n");
+        return;
+    }
+
+    char nome[50];
+    int quantidade;
+
+    printf("Digite o nome do item: ");
+    scanf("%s", nome);
+
+    printf("Digite a quantidade de entrada: ");
+    scanf("%d", &quantidade);
+
+    // Escreve a operação no arquivo
+    fprintf(arquivo, "%s %d Entrada\n", nome, quantidade);
+
+    printf("Entrada registrada com sucesso!\n");
+    fclose(arquivo);
 }
 
 void cadastrarSaida() {
-    // Implementação aqui
+     FILE *arquivo = fopen(ARQUIVO_ESTOQUE, "a"); // Abre o arquivo em modo de adição
+    if (!arquivo) {
+        printf("Erro ao abrir o arquivo de estoque!\n");
+        return;
+    }
+
+    char nome[50];
+    int quantidade;
+
+    printf("Digite o nome do item: ");
+    scanf("%s", nome);
+
+    printf("Digite a quantidade de saída: ");
+    scanf("%d", &quantidade);
+
+    // Escreve a operação no arquivo
+    fprintf(arquivo, "%s %d Saida\n", nome, quantidade);
+
+    printf("Saída registrada com sucesso!\n");
+    fclose(arquivo);
 }
 
 typedef struct {
