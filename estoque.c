@@ -68,17 +68,75 @@ void relatorioCompleto() {
         return;
     }
 
-    char nome[50], tipo[10], numerosSerie[500];
+    typedef struct {
+        char nome[50];
+        int quantidade;
+        char numerosSerie[1000]; // Lista consolidada de números de série
+    } Item;
+
+    Item itens[100]; // Suporta até 100 itens únicos
+    int contadorItens = 0;
+
+    char nome[50], tipo[10], numerosSerie[1000];
     int quantidade;
 
-    printf("\n--- Relatório Completo do Estoque ---\n");
+    // Processar o arquivo de estoque
     while (fscanf(arquivo, "%s %d %s %[^\n]", nome, &quantidade, tipo, numerosSerie) != EOF) {
-        printf("Item: %s, Quantidade: %d, Tipo: %s, Números de Série: %s\n",
-               nome, quantidade, tipo, numerosSerie);
+        // Verificar se o item já está na lista
+        int encontrado = 0;
+        for (int i = 0; i < contadorItens; i++) {
+            if (strcmp(itens[i].nome, nome) == 0) {
+                // Atualizar os números de série e a quantidade com base no tipo de operação
+                if (strcmp(tipo, "Entrada") == 0) {
+                    // Adiciona os números de série ao estoque
+                    strcat(itens[i].numerosSerie, ",");
+                    strcat(itens[i].numerosSerie, numerosSerie);
+                    itens[i].quantidade += quantidade;
+                } else if (strcmp(tipo, "Saida") == 0) {
+                    // Remove os números de série especificados
+                    char *numero = strtok(numerosSerie, ",");
+                    while (numero != NULL) {
+                        char *pos = strstr(itens[i].numerosSerie, numero);
+                        if (pos) {
+                            // Remover o número de série encontrado
+                            int len = strlen(numero);
+                            if (*(pos + len) == ',') {
+                                memmove(pos, pos + len + 1, strlen(pos + len));
+                            } else if (pos != itens[i].numerosSerie) {
+                                *(pos - 1) = '\0';
+                            } else {
+                                *pos = '\0';
+                            }
+                        }
+                        numero = strtok(NULL, ",");
+                    }
+                    itens[i].quantidade -= quantidade;
+                }
+                encontrado = 1;
+                break;
+            }
+        }
+
+        // Se o item não foi encontrado, adicioná-lo à lista
+        if (!encontrado && strcmp(tipo, "Entrada") == 0) {
+            strcpy(itens[contadorItens].nome, nome);
+            itens[contadorItens].quantidade = quantidade;
+            strcpy(itens[contadorItens].numerosSerie, numerosSerie);
+            contadorItens++;
+        }
     }
 
     fclose(arquivo);
+
+    // Exibir o relatório completo do estoque
+    printf("\n--- Relatório Completo do Estoque ---\n");
+    for (int i = 0; i < contadorItens; i++) {
+        if (itens[i].quantidade > 0) { // Exibir apenas itens com saldo positivo
+            printf("Item: %s, Quantidade: %d, Números de Série: %s\n", itens[i].nome, itens[i].quantidade, itens[i].numerosSerie);
+        }
+    }
 }
+
 
 typedef struct {
     char nome[50];
