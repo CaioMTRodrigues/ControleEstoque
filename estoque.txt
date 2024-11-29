@@ -1,2 +1,4 @@
-Cadeira 2 Entrada
-Cadeira 2 Saida
+Cadeira 5 Entrada
+Monitor 90 Entrada
+Cadeira 1 Saidapx 20 Entrada 1
+px 10 Saida 1

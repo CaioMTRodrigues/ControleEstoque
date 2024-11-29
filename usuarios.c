@@ -47,9 +47,6 @@ int loginUsuario() {
             return 1;
         }
     }
-
-    fclose(arquivo);
-    return 0;
 }
 
 int verificarUsuario(const char *nome) {
