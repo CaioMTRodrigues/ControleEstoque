@@ -143,6 +143,16 @@ typedef struct {
     int quantidade;
 } Item;
 
+void limparEstoque() {
+    FILE *arquivo = fopen(ARQUIVO_ESTOQUE, "w");
+    if (!arquivo) {
+        printf("Erro ao abrir o arquivo de estoque!\n");
+        return;
+    }
+    fclose(arquivo);
+    printf("Estoque limpo com sucesso!\n");
+}
+
 void visualizarEstoque() {
     FILE *arquivo = fopen(ARQUIVO_ESTOQUE, "r");
     if (!arquivo) {

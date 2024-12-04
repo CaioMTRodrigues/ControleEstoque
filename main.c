@@ -38,7 +38,8 @@ int main() {
             printf("2. Cadastrar saída de item\n");
             printf("3. Visualizar estoque simples\n");
             printf("4. Visualizar relatório completo\n");
-            printf("5. Sair\n");
+            printf("5. Limpar estoque\n");
+            printf("6. Sair\n");
             printf("Escolha: ");
             scanf("%d", &opcao);
 
@@ -56,6 +57,9 @@ int main() {
                     relatorioCompleto();
                     break;
                 case 5:
+                    limparEstoque();
+                    break;
+                case 6:
                     printf("Saindo...\n");
                     return 0;
                 default:
