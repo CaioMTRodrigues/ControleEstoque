@@ -4,7 +4,7 @@
 #include "usuarios.h"
 #include "estoque.h"
 
-int main() {
+int main() {//Função principal
     int opcao, logado = 0;
 
     do {
